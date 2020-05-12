@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: provider-user-service
+
+fdfs:
+  base:
+    images:
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Pq6AL14JAAL-ej6VVHE023.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Pq-AZpZ4AALxL3j_dvc737.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Pq-AQT3rAAMhr5hSIoY324.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Pq-AcdXYAAMfi28-ekw035.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PrCAB53rAANghCrshuE112.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PrCATAJKAAMvV00qYUQ614.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PrCANmHoAAOmD9EnsLs506.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PrGAX2hhAAOlnjaj6_s700.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PrGASHnMAAN8CzXAgVM914.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsqAQgn7AANjzDYYS6U805.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsqAFQupAANUKJ2_B04218.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsuACKYzAANU1-40hH8960.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsuAaz3aAAOA8OPJQWM278.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsuAfP5SAAODZzFzWZs370.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsyAQ46DAALeEpP7Wn8200.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66PsyAdQlTAAMB-_xbQMM537.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Ps2AZEnGAANCneVm0Rw404.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Ps2AC6ZKAARfVvyHJ48391.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66Ps2AdxawAANbHK_U_Xg067.jpg
+      - http://39.97.251.105:8040/group1/M00/00/00/rBFXSF66hSKAC1bLAAOmD9EnsLs171.jpg
+
+mybatis:
+  type-aliases-package: cn.ann.financial.manager.provider.user.domain
+  mapperLocations: classpath:mapper/*.xml
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.provider.user.service

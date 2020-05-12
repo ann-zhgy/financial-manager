@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: provider-family-service
+
+mybatis:
+  type-aliases-package: cn.ann.financial.manager.provider.family.domain
+  mapperLocations: classpath:mapper/*.xml
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.provider.family.service

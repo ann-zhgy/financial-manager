@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: business-plan
+  jackson:
+    date-format: yyyy-MM-dd
+
+security:
+  oauth2:
+    resource:
+      id: backend-resources-plan
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.plan.controller
+server:
+  port: 9504

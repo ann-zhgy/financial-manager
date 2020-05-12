@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: business-oauth2
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://39.97.251.105:33060/oauth2?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: ann-zhgy
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 600000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: OAuth2HikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.oauth2.service, cn.ann.financial.manager.business.oauth2.controller
+
+server:
+  port: 9502
+
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false

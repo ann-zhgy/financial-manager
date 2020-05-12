@@ -1,0 +1,70 @@
+spring:
+  application:
+    name: spring-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 39.97.251.105:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: business-reg-route
+          uri: lb://business-register
+          predicates:
+            - Path=/api/register, /api/check/**, /api/active
+          filters:
+            - StripPrefix=1
+        - id: business-oauth2-route
+          uri: lb://business-oauth2
+          predicates:
+            - Path=/api/user/**
+          filters:
+            - StripPrefix=1
+        - id: business-profile-route
+          uri: lb://business-profile
+          predicates:
+            - Path=/api/profile/**
+          filters:
+            - StripPrefix=1
+        - id: business-upload-route
+          uri: lb://business-upload
+          predicates:
+            - Path=/api/fast/dfs/**
+          filters:
+            - StripPrefix=1
+        - id: business-deal-group-route
+          uri: lb://business-deal-group
+          predicates:
+            - Path=/api/deal/group/**
+          filters:
+            - StripPrefix=1
+        - id: business-deal-route
+          uri: lb://business-deal
+          predicates:
+            - Path=/api/deal/**
+          filters:
+            - StripPrefix=1
+        - id: business-family-route
+          uri: lb://business-family
+          predicates:
+            - Path=/api/family/**
+          filters:
+            - StripPrefix=1
+        - id: business-plan-route
+          uri: lb://business-plan
+          predicates:
+            - Path=/api/plan/**
+          filters:
+            - StripPrefix=1
+
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.cloud.gateway: debug
+

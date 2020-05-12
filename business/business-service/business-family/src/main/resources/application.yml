@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: business-family
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+security:
+  oauth2:
+    resource:
+      id: backend-resources-family
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.family.controller
+
+server:
+  port: 9507

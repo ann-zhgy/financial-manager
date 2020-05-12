@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: business-profile
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.profile.controller
+server:
+  port: 9503

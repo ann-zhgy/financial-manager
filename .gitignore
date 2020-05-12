@@ -1,0 +1,13 @@
+# maven
+**/target/
+
+# idea
+.idea/
+**/.idea/
+*.iml
+**/*.iml
+**/logs/
+**/rebel.xml
+**/test/
+/provider/provider-api/provider-email-api/
+/provider/provider-service/provider-email-service/

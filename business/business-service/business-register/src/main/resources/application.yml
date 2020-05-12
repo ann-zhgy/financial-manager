@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: business-register
+
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.register.controller
+
+server:
+  port: 9501

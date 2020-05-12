@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: business-deal
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+security:
+  oauth2:
+    resource:
+      id: backend-resources-deal
+
+dubbo:
+  scan:
+    base-packages: cn.ann.financial.manager.business.deal.controller
+
+server:
+  port: 9505

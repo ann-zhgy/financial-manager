@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ann.financial.manager.provider.plan.mapper.TbPlanMapper">
+    <resultMap id="BaseResultMap" type="cn.ann.financial.manager.provider.plan.domain.TbPlan">
+        <!--@mbg.generated generated on Sat Mar 21 20:26:03 CST 2020.-->
+        <!--@Table tb_plan-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="money" jdbcType="DOUBLE" property="money"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="begin_time" jdbcType="DATE" property="beginTime"/>
+        <result column="end_time" jdbcType="DATE" property="endTime"/>
+        <result column="finish_time" jdbcType="DATE" property="finishTime"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="open" jdbcType="INTEGER" property="open"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="deal_id" jdbcType="BIGINT" property="dealId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated generated on Sat Mar 21 20:26:03 CST 2020.-->
+        id, `name`, intro, money, `type`, begin_time, end_time, finish_time, created, updated, remark, `status`, `open`,
+        user_id, deal_id
+    </sql>
+    <select id="get" resultMap="BaseResultMap"
+            parameterType="cn.ann.financial.manager.provider.plan.param.PlanCondition">
+        select
+        <include refid="Base_Column_List"></include>
+        from tb_plan
+        <where>
+            <if test="name != null and intro != ''">and `name` like "%"#{intro,jdbcType=VARCHAR}"%"</if>
+            <if test="intro != null and intro != ''">and intro like "%"#{intro,jdbcType=VARCHAR}"%"</if>
+            <if test="minMoney != null">and money <![CDATA[>= #{minMoney,jdbcType=DOUBLE}]]></if>
+            <if test="maxMoney != null">and money <![CDATA[<= #{maxMoney,jdbcType=DOUBLE}]]></if>
+            <if test="type != null">and `type` = #{type,jdbcType=INTEGER}</if>
+            <if test="beginTime != null">and finish_time <![CDATA[ >= #{beginTime,jdbcType=TIMESTAMP}]]></if>
+            <if test="endTime != null">and finish_time <![CDATA[ <= #{endTime,jdbcType=TIMESTAMP}]]></if>
+            <if test="status != null">and status = #{status,jdbcType=INTEGER}</if>
+            <if test="userId != null">and user_id = #{userId,jdbcType=BIGINT}</if>
+            <if test="open != null">and `open` = #{open,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ann.financial.manager.provider.deal.mapper.TbDealMapper">
+    <resultMap id="BaseResultMap" type="cn.ann.financial.manager.provider.deal.domain.TbDeal">
+        <!--@mbg.generated generated on Sat Mar 21 20:26:03 CST 2020.-->
+        <!--@Table tb_deal-->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="intro" jdbcType="VARCHAR" property="intro"/>
+        <result column="money" jdbcType="DOUBLE" property="money"/>
+        <result column="type" jdbcType="INTEGER" property="type"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+        <result column="deal_time" jdbcType="DATE" property="dealTime"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="open" jdbcType="INTEGER" property="open"/>
+        <result column="user_id" jdbcType="BIGINT" property="userId"/>
+        <result column="deal_group" jdbcType="BIGINT" property="dealGroup"/>
+        <result column="plan_id" jdbcType="BIGINT" property="planId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated generated on Sat Mar 21 20:26:03 CST 2020.-->
+        id, intro, money, `type`, created, updated, deal_time, remark, `open`, user_id, deal_group, plan_id
+    </sql>
+    <select id="get" resultMap="BaseResultMap"
+            parameterType="cn.ann.financial.manager.provider.deal.param.DealCondition">
+        select
+        <include refid="Base_Column_List"/>
+        from tb_deal
+        <where>
+            <if test="intro != null and intro != ''">and intro like "%"#{intro,jdbcType=VARCHAR}"%"</if>
+            <if test="minMoney != null">and money <![CDATA[>= #{minMoney,jdbcType=DOUBLE}]]></if>
+            <if test="maxMoney != null">and money <![CDATA[<= #{maxMoney,jdbcType=DOUBLE}]]></if>
+            <if test="type != null">and type = #{type,jdbcType=INTEGER}</if>
+            <if test="beginTime != null">and deal_time <![CDATA[>= #{beginTime,jdbcType=DATE}]]></if>
+            <if test="endTime != null">and deal_time <![CDATA[ <= #{endTime,jdbcType=DATE}]]></if>
+            <if test="remark != null and remark != ''">and remark like "%"#{remark,jdbcType=VARCHAR}"%"</if>
+            <if test="userId != null">and user_id = #{userId,jdbcType=BIGINT}</if>
+            <if test="dealGroup != null">and deal_group = #{dealGroup,jdbcType=BIGINT}</if>
+            <if test="open != null">and `open` = #{open,jdbcType=INTEGER}</if>
+        </where>
+    </select>
+</mapper>
