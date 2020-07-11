@@ -36,14 +36,15 @@ public class TbDealService extends BaseServiceImpl<TbDeal, TbDealMapper> impleme
     }
 
     @Override
-    public List<TbDeal> get(List<Long> ids) {
+    public PageInfo<TbDeal> get(List<Long> ids, @NotNull int currPage, @NotNull int count) {
+        PageHelper.startPage(currPage, count);
         Example example = new Example(TbDeal.class);
         example.setDistinct(true);
         example.createCriteria()
                 .andEqualTo("open", ProviderConstant.OPEN)
                 .andIn("userId", ids);
-
-        return mapper.selectByExample(example);
+        List<TbDeal> list = mapper.selectByExample(example);
+        return new PageInfo<>(list);
     }
 
     @Override

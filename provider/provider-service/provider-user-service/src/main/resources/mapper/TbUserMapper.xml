@@ -54,7 +54,7 @@
                     ON r.id = ur.role_id
             LEFT JOIN tb_user AS u
                     ON ur.user_id = u.id
-        WHERE p.url != '' AND u.username = #{username,jdbcType=VARCHAR}
+        WHERE u.username = #{username,jdbcType=VARCHAR}
     </select>
     <select id="getMenu" resultMap="permissionResultMap" parameterType="Long">
         SELECT
@@ -70,6 +70,7 @@
             LEFT JOIN tb_permission AS p
                 ON p.id = rp.permission_id
         WHERE u.id = #{userId,jdbcType=BIGINT} and p.display = 1
+        ORDER BY weight ASC
     </select>
     <select id="getRoles" resultMap="roleResultMap" parameterType="Long">
         SELECT

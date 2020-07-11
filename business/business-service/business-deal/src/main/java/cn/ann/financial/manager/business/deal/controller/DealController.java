@@ -248,24 +248,26 @@ public class DealController {
      *
      * @return {@link ResponseResult<List<TbDealDTO>>}
      */
-    @GetMapping(value = "family")
-    public ResponseResult<List<FamilyDealDTO>> getMemberDeals() {
+    @GetMapping(value = "family/{pageNum}")
+    public ResponseResult<PageInfoDTO<FamilyDealDTO>> getMemberDeals(@PathVariable int pageNum) {
         List<Long> ids = userService.getIdsByFamilyId(this.getUser().getFamilyId());
         List<TbUser> users = ids.stream().map(id -> userService.get(id)).collect(Collectors.toList());
-        List<FamilyDealDTO> dtos = dealService.get(ids)
-                .stream()
+        PageInfo<TbDeal> info = dealService.get(ids, pageNum, 10);
+        PageInfoDTO<FamilyDealDTO> dto = new PageInfoDTO<>();
+        BeanUtils.copyProperties(info, dto);
+        dto.setList(info.getList().stream()
                 .map(deal -> {
-                    FamilyDealDTO dto = new FamilyDealDTO();
-                    BeanUtils.copyProperties(deal, dto);
+                    FamilyDealDTO familyDealDTO = new FamilyDealDTO();
+                    BeanUtils.copyProperties(deal, familyDealDTO);
                     for (TbUser user : users) {
                         if (deal.getUserId().equals(user.getId())) {
-                            dto.setUsername(user.getUsername());
+                            familyDealDTO.setUsername(user.getUsername());
                             break;
                         }
                     }
-                    return dto;
-                }).collect(Collectors.toList());
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取家庭所有的交易信息成功", dtos);
+                    return familyDealDTO;
+                }).collect(Collectors.toList()));
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "获取家庭所有的交易信息成功", dto);
     }
 
     /**

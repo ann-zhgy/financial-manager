@@ -84,14 +84,15 @@ public class TbPlanService extends BaseServiceImpl<TbPlan, TbPlanMapper> impleme
     }
 
     @Override
-    public List<TbPlan> get(@NotNull List<Long> userIds) {
+    public PageInfo<TbPlan> get(@NotNull List<Long> userIds, @NotNull int currPage, @NotNull int count) {
+        PageHelper.startPage(currPage, count);
         Example example = new Example(TbPlan.class);
         example.setDistinct(true);
         example.createCriteria()
                 .andEqualTo("open", ProviderConstant.OPEN)
                 .andIn("userId", userIds);
-
-        return mapper.selectByExample(example);
+        List<TbPlan> plans = mapper.selectByExample(example);
+        return new PageInfo<>(plans);
     }
 
     @Override

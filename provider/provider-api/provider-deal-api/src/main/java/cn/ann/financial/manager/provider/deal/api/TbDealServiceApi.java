@@ -22,7 +22,7 @@ public interface TbDealServiceApi extends BaseService<TbDeal> {
      * @param ids id 列表
      * @return {@link List<TbDeal>}
      */
-    List<TbDeal> get(@NotNull List<Long> ids);
+    PageInfo<TbDeal> get(@NotNull List<Long> ids, @NotNull int currPage, @NotNull int count);
 
     /**
      * 根据 条件查询 交易记录

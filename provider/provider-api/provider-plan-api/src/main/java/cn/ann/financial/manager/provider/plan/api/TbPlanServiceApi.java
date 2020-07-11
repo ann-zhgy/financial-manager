@@ -17,7 +17,7 @@ public interface TbPlanServiceApi extends BaseService<TbPlan> {
 
     List<TbPlan> getAvailablePlans(@NotNull Long userId);
 
-    List<TbPlan> get(@NotNull List<Long> userIds);
+    PageInfo<TbPlan> get(@NotNull List<Long> userIds, @NotNull int currPage, @NotNull int count);
 
     List<TbPlan> get(@NotNull PlanCondition condition);
 

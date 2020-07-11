@@ -6,6 +6,7 @@ import cn.ann.financial.manager.business.plan.dto.TbPlanDTO;
 import cn.ann.financial.manager.business.plan.dto.param.ModifyPlan;
 import cn.ann.financial.manager.business.plan.dto.param.ModifyStatus;
 import cn.ann.financial.manager.business.plan.dto.param.PlansParam;
+import cn.ann.financial.manager.commons.constant.PageConstant;
 import cn.ann.financial.manager.commons.constant.ProviderConstant;
 import cn.ann.financial.manager.commons.dto.PageInfoDTO;
 import cn.ann.financial.manager.commons.dto.ResponseResult;
@@ -108,7 +109,7 @@ public class PlanController {
         param.getCondition().setUserId(this.getUserId());
         PageInfo<TbPlan> info = planService.get(
                 param.getCondition(), param.getPageNum(),
-                param.getPageCount() == null ? 0 : param.getPageCount());
+                param.getPageCount() == null ? PageConstant.PAGE_SIZE : param.getPageCount());
         PageInfoDTO<TbPlanDTO> dto = new PageInfoDTO<>();
         BeanUtils.copyProperties(info, dto);
         dto.setList(info.getList().stream()
@@ -254,25 +255,27 @@ public class PlanController {
      *
      * @return {@link ResponseResult<List<TbPlanDTO>>}
      */
-    @GetMapping(value = "family")
+    @GetMapping(value = "family/{pageNum}")
     @SentinelResource(value = "getMemberPlans", fallback = "getMemberPlansFallback", fallbackClass = PlanControllerFallback.class)
-    public ResponseResult<List<FamilyPlanDTO>> getMemberPlans() {
+    public ResponseResult<PageInfoDTO<FamilyPlanDTO>> getMemberPlans(@PathVariable int pageNum) {
         List<Long> ids = userService.getIdsByFamilyId(this.getUser().getFamilyId());
         List<TbUser> users = ids.stream().map(id -> userService.get(id)).collect(Collectors.toList());
-        List<FamilyPlanDTO> dtos = planService.get(ids)
-                .stream()
+        PageInfo<TbPlan> info = planService.get(ids, pageNum, 10);
+        PageInfoDTO<FamilyPlanDTO> dto = new PageInfoDTO<>();
+        BeanUtils.copyProperties(info, dto);
+        dto.setList(info.getList().stream()
                 .map(tbPlan -> {
-                    FamilyPlanDTO dto = new FamilyPlanDTO();
-                    BeanUtils.copyProperties(tbPlan, dto);
+                    FamilyPlanDTO familyPlanDTO = new FamilyPlanDTO();
+                    BeanUtils.copyProperties(tbPlan, familyPlanDTO);
                     for (TbUser user : users) {
                         if (tbPlan.getUserId().equals(user.getId())) {
-                            dto.setUsername(user.getUsername());
+                            familyPlanDTO.setUsername(user.getUsername());
                             break;
                         }
                     }
-                    return dto;
-                }).collect(Collectors.toList());
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "可以关联的计划列表", dtos);
+                    return familyPlanDTO;
+                }).collect(Collectors.toList()));
+        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "可以关联的计划列表", dto);
     }
 
     /**

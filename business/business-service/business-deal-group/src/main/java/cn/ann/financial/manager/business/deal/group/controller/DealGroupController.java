@@ -4,6 +4,7 @@ import cn.ann.financial.manager.business.deal.group.dto.TbDealGroupDTO;
 import cn.ann.financial.manager.business.deal.group.dto.param.DealGroupsParam;
 import cn.ann.financial.manager.business.deal.group.dto.param.ModifyDealGroup;
 import cn.ann.financial.manager.commons.constant.PageConstant;
+import cn.ann.financial.manager.commons.constant.ProviderConstant;
 import cn.ann.financial.manager.commons.dto.PageInfoDTO;
 import cn.ann.financial.manager.commons.dto.ResponseResult;
 import cn.ann.financial.manager.commons.provider.dto.InsertResult;
@@ -92,7 +93,8 @@ public class DealGroupController {
             param.setCondition(new DealGroupCondition());
         }
         param.getCondition().setUserId(this.getUserId());
-        PageInfo<TbDealGroup> pageInfo = groupService.get(param.getCondition(), param.getPageNum(), param.getPageCount());
+        PageInfo<TbDealGroup> pageInfo = groupService.get(param.getCondition(), param.getPageNum(),
+                param.getPageCount() == null ? PageConstant.PAGE_SIZE : param.getPageCount());
         PageInfoDTO<TbDealGroupDTO> dto = new PageInfoDTO<>();
         BeanUtils.copyProperties(pageInfo, dto);
         dto.setList(pageInfo.getList().stream()

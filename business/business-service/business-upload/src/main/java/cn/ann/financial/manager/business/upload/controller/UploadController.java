@@ -30,8 +30,9 @@ public class UploadController {
 
     @PostMapping("upload")
     public ResponseResult<UploadDTO> upload(@RequestBody MultipartFile file, @RequestBody MultipartFile[] files) throws IOException {
-        UploadDTO dto = new UploadDTO();
+        UploadDTO dto = null;
         if (file != null) {
+            dto = new UploadDTO();
             dto.setPath(uploadService.upload(file));
         }
         if (files != null && files.length > 0) {
@@ -39,10 +40,14 @@ public class UploadController {
             for (MultipartFile editorFile : files) {
                 fileNames.add(uploadService.upload(editorFile));
             }
-
+            dto = new UploadDTO();
             dto.setPaths(fileNames);
         }
-        return new ResponseResult<>(ResponseResult.CodeStatus.OK, "文件上传成功", dto);
+        if (dto != null) {
+            return new ResponseResult<>(ResponseResult.CodeStatus.OK, "文件上传成功", dto);
+        } else {
+            return new ResponseResult<>(ResponseResult.CodeStatus.FAIL, "文件上传失败");
+        }
     }
 
     @PostMapping("delete")
